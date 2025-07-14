@@ -1,0 +1,11 @@
+[
+  { "id": 24, "name": "Parsnip", "category": "Crops" },
+  { "id": 188, "name": "Potato", "category": "Crops" },
+  { "id": 340, "name": "Wine", "category": "Artisan Goods" },
+  { "id": 72, "name": "Diamond", "category": "Minerals" },
+  { "id": 337, "name": "Iridium Bar", "category": "Resources" },
+  { "id": 78, "name": "Amethyst", "category": "Minerals" },
+  { "id": 182, "name": "Mayonnaise", "category": "Artisan Goods" },
+  { "id": 190, "name": "Cauliflower", "category": "Crops" },
+  { "id": 395, "name": "Coffee", "category": "Artisan Goods" }
+]
