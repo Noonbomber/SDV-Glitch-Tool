@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stardew Dialogue Glitch Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h2 { color: #444; }
+    select, input, button, textarea { width: 100%; margin-top: 10px; padding: 10px; }
+    .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Stardew Dialogue Glitch Generator (${^^}$)</h2>
+
+    <label for="itemSearch">Search for an item:</label>
+    <input type="text" id="itemSearch" oninput="filterItems()" placeholder="Type to search...">
+
+    <label for="itemSelect">Select an item:</label>
+    <select id="itemSelect"></select>
+
+    <label for="qualitySelect">Select quality:</label>
+    <select id="qualitySelect">
+      <option value="0">Normal</option>
+      <option value="1">Silver</option>
+      <option value="2">Gold</option>
+      <option value="4">Iridium</option>
+    </select>
+
+    <label for="amountInput">Amount:</label>
+    <input type="number" id="amountInput" min="1" max="999" value="1">
+
+    <button onclick="generateGlitch()">Generate Glitched Command</button>
+    <textarea id="output" rows="3" readonly></textarea>
+    <button onclick="copyOutput()">Copy to Clipboard</button>
+  </div>
+
+  <script>
+    const items = [
+      { name: 'Ancient Fruit', id: 454 },
+      { name: 'Starfruit', id: 268 },
+      { name: 'Pumpkin', id: 276 },
+      { name: 'Parsnip', id: 24 },
+      { name: 'Diamond', id: 72 },
+      { name: 'Prismatic Shard', id: 74 },
+      { name: 'Iridium Bar', id: 337 },
+      { name: 'Coffee', id: 395 },
+      { name: 'Cheese', id: 424 },
+      { name: 'Wine', id: 348 }
+    ];
+
+    function filterItems() {
+      const query = document.getElementById("itemSearch").value.toLowerCase();
+      const filtered = items.filter(item => item.name.toLowerCase().includes(query));
+      populateDropdown(filtered);
+    }
+
+    function populateDropdown(itemList) {
+      const select = document.getElementById("itemSelect");
+      select.innerHTML = "";
+      itemList.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        select.appendChild(option);
+      });
+    }
+
+    function generateGlitch() {
+      const itemId = document.getElementById("itemSelect").value;
+      const quality = document.getElementById("qualitySelect").value;
+      const amount = document.getElementById("amountInput").value;
+      const output = `[${itemId} ${amount} ${quality}]`;
+      const glitched = output.replace(/(.{12})/g, "$1${^^}");
+      document.getElementById("output").value = glitched;
+    }
+
+    function copyOutput() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("Copied to clipboard!");
+    }
+
+    // Initial load
+    populateDropdown(items);
+  </script>
+</body>
+</html>
