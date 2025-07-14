@@ -50,7 +50,7 @@
       .then(res => res.json())
       .then(data => {
         items = data;
-        categories = [...new Set(items.map(i => i.category))];
+        categories = ["All", ...new Set(items.map(i => i.category))];
         renderTabs();
       });
 
@@ -83,7 +83,9 @@
       if (!tabContent) return;
       tabContent.innerHTML = "";
 
-      const filteredItems = items.filter(i => i.category === category && i.name.toLowerCase().includes(filter.toLowerCase()));
+      let filteredItems = category === "All" ? items : items.filter(i => i.category === category);
+      filteredItems = filteredItems.filter(i => i.name.toLowerCase().includes(filter.toLowerCase()));
+
       const list = document.createElement("div");
       list.className = "item-list";
 
@@ -136,7 +138,12 @@
         finalCommand += `[${id} ${amount} ${quality}]`;
       });
 
-      const glitched = finalCommand.replace(/(.{12})/g, "$1${^^}");
+      // Insert ${^^} every 12 characters to glitch format
+      let glitched = "";
+      for (let i = 0; i < finalCommand.length; i += 12) {
+        glitched += finalCommand.slice(i, i + 12) + "${^^}";
+      }
+
       document.getElementById("output").value = glitched;
     }
 
