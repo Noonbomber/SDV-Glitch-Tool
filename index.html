@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Stardew Dialogue Glitch Generator</title>
+  <title>Stardew Dialogue Glitch Generator (${^^}$)</title>
   <style>
     body { font-family: Arial, sans-serif; background: #111; color: #eee; margin: 0; padding: 20px; }
     .container { max-width: 900px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
@@ -37,7 +37,7 @@
     <input type="number" id="amount" min="1" max="999" value="1">
 
     <button class="generate" onclick="generateCommand()">Generate Glitched Command</button>
-    <textarea id="output" rows="3" readonly></textarea>
+    <textarea id="output" rows="6" readonly></textarea>
     <button class="copy" onclick="copyOutput()">Copy to Clipboard</button>
   </div>
 
@@ -122,6 +122,14 @@
       populateTab(currentCategory, document.getElementById("searchBar").value);
     }
 
+    function glitchify(str) {
+      let result = "";
+      for (let i = 0; i < str.length; i += 6) {
+        result += str.slice(i, i + 6) + "${^^}\n";
+      }
+      return result.trim();
+    }
+
     function generateCommand() {
       const selectedItems = document.querySelectorAll("input[name='item']:checked");
       const quality = document.getElementById("quality").value;
@@ -132,19 +140,14 @@
         return;
       }
 
-      let finalCommand = "";
+      let commands = "";
       selectedItems.forEach(input => {
         const id = input.value;
-        finalCommand += `[${id} ${amount} ${quality}]`;
+        const rawCommand = `#action AddItem ${id} ${amount} ${quality}`;
+        commands += glitchify(rawCommand) + "\n\n";
       });
 
-      // Insert ${^^} every 12 characters to glitch format
-      let glitched = "";
-      for (let i = 0; i < finalCommand.length; i += 12) {
-        glitched += finalCommand.slice(i, i + 12) + "${^^}";
-      }
-
-      document.getElementById("output").value = glitched;
+      document.getElementById("output").value = commands.trim();
     }
 
     function copyOutput() {
